@@ -7,12 +7,17 @@ function PlantPage() {
   const url = "http://localhost:6001/plants"
   const [ plants, setPlants ] = useState([])
   const [ searchPlant, setSearchPlant ] = useState("")
+  const [ stockId, setStockId ] = useState([])
 
   useEffect(() => {
     fetch(url)
     .then(res => res.json())
     .then(data => setPlants(data))
   }, [])
+
+  function addIdToStockArray(id){
+    setStockId([...stockId, id])
+  }
 
   function onNewPlantAdd(newPlant){
     setPlants([...plants, newPlant])
@@ -49,7 +54,7 @@ function PlantPage() {
     <main>
       <NewPlantForm url={url} onPlantPriceUpdate={onPlantPriceUpdate} onNewPlantAdd={onNewPlantAdd} plants={plantsToDisplay}/>
       <Search searchPlant={searchPlant} updateSearchPlant={updateSearchPlant} />
-      <PlantList url={url} plants={plantsToDisplay} onPlantDelete={onPlantDelete} />
+      <PlantList stockId={stockId} addIdToStockArray={addIdToStockArray} url={url} plants={plantsToDisplay} onPlantDelete={onPlantDelete} />
     </main>
   );
 }
