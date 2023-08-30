@@ -29,6 +29,17 @@ function PlantPage() {
     setPlants(updatedPlants)
   }
 
+  function onPlantPriceUpdate(updatedPlant){
+    const updatedPlants = plants.map(plant => {
+      if(plant.id === updatedPlant.id){
+        return updatedPlant
+      } else {
+        return plant
+      }
+    })
+    setPlants(updatedPlants)
+  }
+
   const plantsToDisplay = plants.filter(plant => {
     return plant.name.toLowerCase().includes(searchPlant.toLowerCase())
   })
@@ -36,7 +47,7 @@ function PlantPage() {
 
   return (
     <main>
-      <NewPlantForm url={url} onNewPlantAdd={onNewPlantAdd} />
+      <NewPlantForm url={url} onPlantPriceUpdate={onPlantPriceUpdate} onNewPlantAdd={onNewPlantAdd} plants={plantsToDisplay}/>
       <Search searchPlant={searchPlant} updateSearchPlant={updateSearchPlant} />
       <PlantList url={url} plants={plantsToDisplay} onPlantDelete={onPlantDelete} />
     </main>

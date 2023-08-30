@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 
-function NewPlantForm({url, onNewPlantAdd}) {
+function NewPlantForm({url, onNewPlantAdd, plants, onPlantPriceUpdate}) {
   const initialValue = {
     name: "",
     image: "",
     price: ""
   }
+  const initialUpdateValue = {
+    name: "",
+    price: ""
+  }
 
   const [ newPlantData, setNewPlantData ] = useState(initialValue)
+  const [ updatePlantData, setUpdatePlantData ] = useState(initialUpdateValue)
 
   function handleChange(e){
     const { name, value } = e.target
@@ -34,6 +39,41 @@ function NewPlantForm({url, onNewPlantAdd}) {
       onNewPlantAdd(data)
       setNewPlantData(initialValue)
     })
+  }
+
+  function handleUpdateChange(e){
+    const {name, value} = e.target
+
+    setUpdatePlantData({
+      ...updatePlantData,
+      [name]: value
+    })
+  }
+
+  function handlePlantUpdateSubmit(e){
+    e.preventDefault()
+
+    const updatedPlant = plants.filter(plant => {
+      return plant.name.toLowerCase() === updatePlantData.name.toLowerCase()
+    })
+
+    if(updatedPlant.length !== 1){
+      alert("We cannot find the plant you want to update. Please check the spelling on the plant name and try again.")
+    } else {
+      const updatedPlantId = updatedPlant[0].id
+      const newPrice = parseInt(updatePlantData.price)
+      
+      fetch(`${url}/${updatedPlantId}`, {
+        method: "PATCH",
+        headers: {
+          "content-type" : "application/json",
+          "accept" : "application/json"
+        },
+        body: JSON.stringify({price: newPrice})
+      })
+      .then(res => res.json())
+      .then(data => onPlantPriceUpdate(data))
+    }
   }
 
   return (
@@ -63,6 +103,26 @@ function NewPlantForm({url, onNewPlantAdd}) {
           onChange={handleChange}
         />
         <button type="submit">Add Plant</button>
+      </form>
+
+      <h2 style={{marginTop: "20px"}}>Update Plant Price</h2>
+      <form onSubmit={handlePlantUpdateSubmit} >
+        <input 
+          type="text" 
+          name="name" 
+          placeholder="Plant name" 
+          value={updatePlantData.name}
+          onChange={handleUpdateChange}
+        />
+        <input 
+          type="number" 
+          name="price" 
+          step="0.01" 
+          placeholder="Price" 
+          value={updatePlantData.price}
+          onChange={handleUpdateChange}
+        />
+        <button type="submit">Update Plant</button>
       </form>
     </div>
   );
