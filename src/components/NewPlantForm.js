@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 
+//Comented out code was intial attempt at updating price but found a more
+//efficient way to do so. Check out PlantCard for new form + PATCH request
+
 function NewPlantForm({url, onNewPlantAdd, plants, onPlantPriceUpdate}) {
   const initialValue = {
     name: "",
     image: "",
     price: ""
   }
-  const initialUpdateValue = {
-    name: "",
-    price: ""
-  }
+  // const initialUpdateValue = {
+  //   name: "",
+  //   price: ""
+  // }
 
   const [ newPlantData, setNewPlantData ] = useState(initialValue)
-  const [ updatePlantData, setUpdatePlantData ] = useState(initialUpdateValue)
+  // const [ updatePlantData, setUpdatePlantData ] = useState(initialUpdateValue)
 
   function handleChange(e){
     const { name, value } = e.target
@@ -41,40 +44,40 @@ function NewPlantForm({url, onNewPlantAdd, plants, onPlantPriceUpdate}) {
     })
   }
 
-  function handleUpdateChange(e){
-    const {name, value} = e.target
+  // function handleUpdateChange(e){
+  //   const {name, value} = e.target
 
-    setUpdatePlantData({
-      ...updatePlantData,
-      [name]: value
-    })
-  }
+  //   setUpdatePlantData({
+  //     ...updatePlantData,
+  //     [name]: value
+  //   })
+  // }
 
-  function handlePlantUpdateSubmit(e){
-    e.preventDefault()
+  // function handlePlantUpdateSubmit(e){
+  //   e.preventDefault()
 
-    const updatedPlant = plants.filter(plant => {
-      return plant.name.toLowerCase() === updatePlantData.name.toLowerCase()
-    })
+  //   const updatedPlant = plants.filter(plant => {
+  //     return plant.name.toLowerCase() === updatePlantData.name.toLowerCase()
+  //   })
 
-    if(updatedPlant.length !== 1){
-      alert("We cannot find the plant you want to update. Please check the spelling on the plant name and try again.")
-    } else {
-      const updatedPlantId = updatedPlant[0].id
-      const newPrice = parseInt(updatePlantData.price)
+  //   if(updatedPlant.length !== 1){
+  //     alert("We cannot find the plant you want to update. Please check the spelling on the plant name and try again.")
+  //   } else {
+  //     const updatedPlantId = updatedPlant[0].id
+  //     const newPrice = parseInt(updatePlantData.price)
       
-      fetch(`${url}/${updatedPlantId}`, {
-        method: "PATCH",
-        headers: {
-          "content-type" : "application/json",
-          "accept" : "application/json"
-        },
-        body: JSON.stringify({price: newPrice})
-      })
-      .then(res => res.json())
-      .then(data => onPlantPriceUpdate(data))
-    }
-  }
+  //     fetch(`${url}/${updatedPlantId}`, {
+  //       method: "PATCH",
+  //       headers: {
+  //         "content-type" : "application/json",
+  //         "accept" : "application/json"
+  //       },
+  //       body: JSON.stringify({price: newPrice})
+  //     })
+  //     .then(res => res.json())
+  //     .then(data => onPlantPriceUpdate(data))
+  //   }
+  // }
 
   return (
     <div className="new-plant-form">
