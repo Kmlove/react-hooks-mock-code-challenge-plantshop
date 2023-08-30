@@ -8,8 +8,6 @@ function PlantCard({plant}) {
     setInStock(false)
   }
 
-  const buttonText = inStock ? "In Stock" : "Out of Stock"
-
   return (
     <li className="card">
       <img src={image} alt={name} />
