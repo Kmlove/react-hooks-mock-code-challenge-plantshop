@@ -54,7 +54,7 @@ function PlantPage() {
     <main>
       <NewPlantForm url={url} onPlantPriceUpdate={onPlantPriceUpdate} onNewPlantAdd={onNewPlantAdd} plants={plantsToDisplay}/>
       <Search searchPlant={searchPlant} updateSearchPlant={updateSearchPlant} />
-      <PlantList stockId={stockId} addIdToStockArray={addIdToStockArray} url={url} plants={plantsToDisplay} onPlantDelete={onPlantDelete} />
+      <PlantList onPlantPriceUpdate={onPlantPriceUpdate} stockId={stockId} addIdToStockArray={addIdToStockArray} url={url} plants={plantsToDisplay} onPlantDelete={onPlantDelete} />
     </main>
   );
 }

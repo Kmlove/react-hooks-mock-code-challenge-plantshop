@@ -105,7 +105,7 @@ function NewPlantForm({url, onNewPlantAdd, plants, onPlantPriceUpdate}) {
         <button type="submit">Add Plant</button>
       </form>
 
-      <h2 style={{marginTop: "20px"}}>Update Plant Price</h2>
+      {/* <h2 style={{marginTop: "20px"}}>Update Plant Price</h2>
       <form onSubmit={handlePlantUpdateSubmit} >
         <input 
           type="text" 
@@ -123,7 +123,7 @@ function NewPlantForm({url, onNewPlantAdd, plants, onPlantPriceUpdate}) {
           onChange={handleUpdateChange}
         />
         <button type="submit">Update Plant</button>
-      </form>
+      </form> */}
     </div>
   );
 }
